@@ -5,6 +5,8 @@ import CurrentLocationButton from './components/CurrentLocationButton'
 import Fetching from './components/Fetching'
 import { OPEN_WEATHER_API_KEY as apiKey } from './_apiKeys'
 import WeatherContainer from './components/WeatherContainer'
+import CustomLocationButton from './components/CustomLocationButton'
+import EnterLocationForm from './components/EnterLocationForm'
 
 const baseUrl = 'https://api.openweathermap.org/data/2.5/weather?'
 
@@ -12,11 +14,17 @@ export default function App() {
 
   const [ fetching, setFetching ] = useState(false)
   const [ weatherData, setWeatherData ] = useState(null)
+  // const [ custom, setCustom ] = useState(false)
 
   const onPressHandler = () => {
     setFetching(true)
-    // setTimeout(() => getCurrentLocationData(), 2000)
-    getCurrentLocationData()
+    setTimeout(() => getCurrentLocationData(), 1500)
+    // getCurrentLocationData()
+  }
+
+  const onCustomLocationHandler = () => {
+    setFetching(false)
+    // setCustom(false)
   }
 
   const getCurrentLocationData = () => {
@@ -41,6 +49,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      {!weatherData && !fetching && <CustomLocationButton onPress={onCustomLocationHandler} clearWeather={setWeatherData}/>}
+      {/* {custom && <EnterLocationForm clearWeather={setWeatherData}/>} */}
       {!weatherData && fetching && <Fetching />}
       {!weatherData && !fetching && <CurrentLocationButton onPress={onPressHandler} />}
       {weatherData && <WeatherContainer weatherData={weatherData} clearWeather={setWeatherData} fetching={fetching}/>}
@@ -54,6 +64,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 })

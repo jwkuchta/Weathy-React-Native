@@ -7,9 +7,6 @@ import Fetching from './Fetching'
 
 const WeatherContainer = (props) => {
 
-    console.log('fetching: ', props.fetching)
-    console.log('weatherData === null: ', props.weatherData === null)
-
     const handleBackHandler = () => {
         props.clearWeather(null)
     }
