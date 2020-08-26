@@ -1,17 +1,21 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
 import WeatherOutput from './WeatherOutput'
+import colors from '../constants/colors'
+import CustomButton from './CustomButton'
 
-const WeatherContainer = ({ fetching, weatherData, clearWeather }) => {
+const WeatherContainer = (props) => {
+
+    console.log('props in the weather container', props)
 
     const handleBackHandler = () => {
-        clearWeather(null)
+        props.clearWeather(null)
     }
 
     return (
         <View style={styles.container}>
-            <WeatherOutput />
-            <Button title="BACK" onPress={handleBackHandler}></Button>
+            <WeatherOutput weatherData={props.weatherData}/>
+            <CustomButton onPress={handleBackHandler}>BACK</CustomButton>
         </View>
     )
 }
@@ -22,7 +26,8 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
-    },
+      marginBottom: 40
+    }
 })
 
 export default WeatherContainer

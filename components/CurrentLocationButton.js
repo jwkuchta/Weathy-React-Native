@@ -1,28 +1,13 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import colors from '../constants/colors'
+import CustomButton from './CustomButton'
 
 const CurrentLocationButton = props => {
     return (
-        <TouchableOpacity onPress={props.onPress} activeOpacity={0.6}>
-            <View style={styles.button}>
-                <Text style={styles.buttonText}>Current Location</Text>
-            </View>
-        </TouchableOpacity>
+        <CustomButton 
+            onPress={props.onPress}>
+            Current Location
+        </CustomButton>
     )
 }
-
-const styles = StyleSheet.create({
-    button: {
-        backgroundColor: colors.orange,
-        paddingVertical: 12,
-        paddingHorizontal: 30,
-        borderRadius: 25
-    },
-    buttonText: {
-        color: 'white',
-        fontSize: 18
-    }
-})
 
 export default CurrentLocationButton

@@ -8,8 +8,6 @@ import WeatherContainer from './components/WeatherContainer'
 
 const baseUrl = 'https://api.openweathermap.org/data/2.5/weather?'
 
-console.log('api key', apiKey)
-
 export default function App() {
 
   const [ fetching, setFetching ] = useState(false)
@@ -31,9 +29,6 @@ export default function App() {
   }
 
   const getWeatherData = (lat, lon) => {
-    console.log('env', process.env.NODE_ENV)
-    console.log('api key', apiKey)
-    console.log(lat, lon, baseUrl)
     let apiUrl = `${baseUrl}lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`
     fetch(apiUrl)
     .then(resp => resp.json())
@@ -42,9 +37,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <CurrentLocationButton onPress={onPressHandler} />
+      {!weatherData && <CurrentLocationButton onPress={onPressHandler} />}
       {fetching && <Fetching />}
-      {weatherData && <WeatherContainer weather={weatherData} clearWeather={setWeatherData}/>}
+      {weatherData && <WeatherContainer weatherData={weatherData} clearWeather={setWeatherData}/>}
     </View>
   )
 
