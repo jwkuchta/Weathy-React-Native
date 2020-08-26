@@ -34,7 +34,7 @@ const WeatherOutput = ({ weatherData }) => {
                     onColor={colors.orange}
                     offColor='#D3D3D3'
                     label='°F'
-                    labelStyle={{fontSize: '18'}}
+                    labelStyle={{fontSize: 18}}
                     size='medium'
                     onToggle={() => setOption(!option)}
                     />

@@ -1,28 +1,25 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
 import colors from '../constants/colors'
 
-const Fetching = props => {
+const Fetching = () => {
     return (
-        <View style={styles.fetchingContainer}>
-            <View>
-                <Text style={styles.text}>Getting weather data</Text>
-            </View>
+        <View style={[styles.container, styles.horizontal]}>
+            <ActivityIndicator size="large" color={colors.orange} />
         </View>
         
     )
 }
 
 const styles = StyleSheet.create({
-    fetchingContainer: {
-        backgroundColor: colors.orange,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1
+    container: {
+      flex: 1,
+      justifyContent: "center"
     },
-    text: {
-        color: 'white',
-        fontSize: 28
+    horizontal: {
+      flexDirection: "row",
+      justifyContent: "space-around",
+      padding: 10
     }
 })
 
