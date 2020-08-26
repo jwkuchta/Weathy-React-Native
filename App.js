@@ -14,7 +14,8 @@ export default function App() {
   const [ weatherData, setWeatherData ] = useState(null)
 
   const onPressHandler = () => {
-    setFetching(false)
+    setFetching(true)
+    // setTimeout(() => getCurrentLocationData(), 2000)
     getCurrentLocationData()
   }
 
@@ -32,14 +33,17 @@ export default function App() {
     let apiUrl = `${baseUrl}lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`
     fetch(apiUrl)
     .then(resp => resp.json())
-    .then(data => setWeatherData(data))
+    .then(data => {
+      setWeatherData(data)
+      setFetching(false)
+    })
   }
 
   return (
     <View style={styles.container}>
-      {!weatherData && <CurrentLocationButton onPress={onPressHandler} />}
-      {fetching && <Fetching />}
-      {weatherData && <WeatherContainer weatherData={weatherData} clearWeather={setWeatherData}/>}
+      {!weatherData && fetching && <Fetching />}
+      {!weatherData && !fetching && <CurrentLocationButton onPress={onPressHandler} />}
+      {weatherData && <WeatherContainer weatherData={weatherData} clearWeather={setWeatherData} fetching={fetching}/>}
     </View>
   )
 

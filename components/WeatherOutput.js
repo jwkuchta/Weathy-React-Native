@@ -36,7 +36,7 @@ const WeatherOutput = ({ weatherData }) => {
                     label='°F'
                     labelStyle={{fontSize: '18'}}
                     size='medium'
-                    onToggle={() => setOption(!option) }
+                    onToggle={() => setOption(!option)}
                     />
                 <OutputText> °C</OutputText>
                 </View>

@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
 const OutputText = props => {
+    
     return (
         <Text style={{...styles.title, ...props.style}}>{props.children}</Text>
     )
