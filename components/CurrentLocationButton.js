@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import colors from '../constants/colors'
 
 const CurrentLocationButton = props => {
@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: 'white',
-        // fontFamily: 'open-sans',
         fontSize: 18
     }
 })
