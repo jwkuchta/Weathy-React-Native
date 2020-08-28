@@ -3,12 +3,11 @@ import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
 import colors from '../constants/colors'
 
 const Fetching = () => {
-    return (
-        <View style={[styles.container, styles.horizontal]}>
-            <ActivityIndicator size="large" color={colors.orange} />
-        </View>
-        
-    )
+  return (
+    <View style={[styles.container, styles.horizontal]}>
+      <ActivityIndicator size="large" color={colors.orange} />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({

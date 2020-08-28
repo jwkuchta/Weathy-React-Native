@@ -37,7 +37,7 @@ const WeatherOutput = ({ weatherData }) => {
                     labelStyle={{fontSize: 18}}
                     size='medium'
                     onToggle={() => setOption(!option)}
-                    />
+                />
                 <OutputText> °C</OutputText>
                 </View>
                 <OutputText>Conditions: {weatherData.weather[0].main} - {weatherData.weather[0].description}</OutputText>

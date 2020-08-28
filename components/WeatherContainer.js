@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
 import WeatherOutput from './WeatherOutput'
 import colors from '../constants/colors'
-import CustomButton from './CustomButton'
+import { CustomButton } from './Buttons'
 import Fetching from './Fetching'
 
 const WeatherContainer = (props) => {
 
     const handleBackHandler = () => {
-        props.clearWeather(null)
+        props.navigation.replace('Home')
     }
 
     if (props.fetching && props.weatherData === null) {
