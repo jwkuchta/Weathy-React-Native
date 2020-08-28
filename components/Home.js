@@ -13,6 +13,7 @@ const Home = (props) => {
 
     const [ fetching, setFetching ] = useState(false)
     const [ weatherData, setWeatherData ] = useState(null)
+    const [ custom, setCustom ] = useState(false)
 
     const onPressHandler = () => {
         setFetching(true)
@@ -21,8 +22,9 @@ const Home = (props) => {
     }
 
     const onCustomLocationHandler = () => {
-        setFetching(false)
+        setCustom(true)
         props.navigation.replace('EnterLocation')
+        setFetching(false)  
     }
 
     const getCurrentLocationData = () => {
@@ -35,13 +37,20 @@ const Home = (props) => {
         }   
     }
 
-    const getWeatherData = (lat, lon) => {
-        let apiUrl = `${baseUrl}lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`
+    // rewritten to accomodate for lat/lon country/city
+    const getWeatherData = (param1, param2) => {
+        let apiUrl = `${baseUrl}lat=${param1}&lon=${param2}&units=imperial&appid=${apiKey}`
+        console.log(custom)
+        if (custom) {
+            apiUrl = `${baseUrl}q=${param1},${param2}&appid=${apiKey}&units=imperial`
+        }
+        // let apiUrl = `${baseUrl}lat=${param1}&lon=${param2}&units=imperial&appid=${apiKey}`
         fetch(apiUrl)
         .then(resp => resp.json())
         .then(data => {
         setWeatherData(data)
         setFetching(false)
+        setCustom(false)
         })
     }
 
@@ -50,8 +59,14 @@ const Home = (props) => {
         {!weatherData && fetching && <Fetching />}
         {!weatherData && !fetching && 
         <View>
-            <CustomLocationButton onPress={onCustomLocationHandler} />
-            <CurrentLocationButton onPress={onPressHandler} />
+            {custom ? 
+            <EnterLocationForm navigation={props.navigation} hello={'hello there'}/> 
+            : 
+            <CustomLocationButton onPress={onCustomLocationHandler} />} 
+            {!custom ? 
+            <CurrentLocationButton onPress={onPressHandler} /> 
+            : 
+            null}  
         </View>}
         {weatherData && <WeatherContainer 
         weatherData={weatherData} 
@@ -59,7 +74,6 @@ const Home = (props) => {
         fetching={fetching}
         navigation={props.navigation}
         />}
-        {/* {custom && !weatherData && !fetching && <EnterLocationForm navigation={props.navigation} setCustom={setCustom} />} */}
         </View>
     )
 }
