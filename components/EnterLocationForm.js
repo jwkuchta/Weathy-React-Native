@@ -1,20 +1,32 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, TextInput } from 'react-native'
+import { View, StyleSheet, TextInput } from 'react-native'
 import { CustomButton } from './Buttons'
-import { Ionicons } from '@expo/vector-icons'
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons'
 
 const EnterLocationForm = props => {
 
-    // console.log('enter lccation form props', props.setCustom)
+    console.log('ENTER LOCATION -- PROPS --', props)
 
     const [ city, setCity ] = useState(null)
     const [ country, setCountry ] = useState(null)
-    const [ state, setState ] = useState(null)
+    const [ weatherData, setWeatherData ] = useState(null)
 
-    const handleBackHandler = () => {
+    const goBackHome = () => {
         props.navigation.replace('Home')
         // props.setCustom(false)
+    }
+
+    const handleSubmitForm = () => {
+        // console.log(props)
+        props.getWeatherData(city, country)
+    }
+
+    if (props.fetching) {
+        return (
+            <View>
+                <Fetching />
+            </View>
+        )
     }
 
     return (
@@ -25,27 +37,27 @@ const EnterLocationForm = props => {
                 blurOnSubmit 
                 autoCapitalize='none' 
                 autoCorrect={false}
-                keyboardType='letter-pad'
+                keyboardType='default'
                 minLength={3}
                 value={city}
                 placeholder='City...'
-                onChangeText={() => {}}
+                // onChangeText={props.setCity(city)}
                 />
                 <TextInput 
                 style={styles.input} 
                 blurOnSubmit 
                 autoCapitalize='none' 
                 autoCorrect={false}
-                keyboardType='letter-pad'
+                keyboardType='default'
                 minLength={3}
                 value={country}
                 placeholder='Country...'
-                onChangeText={() => {}}
+                // onChangeText={props.setCountry(country)}
                 />
             </View>
             <View style={styles.buttons}>
-                <CustomButton onPress={handleBackHandler}><AntDesign name="search1" size={24} color="white" /></CustomButton>
-                <CustomButton onPress={handleBackHandler}><AntDesign name="back" size={24} color="white" /></CustomButton>
+                <CustomButton onPress={handleSubmitForm}><AntDesign name="search1" size={24} color="white" /></CustomButton>
+                <CustomButton onPress={goBackHome}><AntDesign name="back" size={24} color="white" /></CustomButton>
             </View>
         </View>
     )
@@ -59,7 +71,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     inputContainer: {
-        flex: 1,
+        // flex: 1,
         flexDirection: 'row',
         // width: '80%',
         // maxWidth: '95%',
@@ -85,4 +97,6 @@ const styles = StyleSheet.create({
     }
 })
 
+
 export default EnterLocationForm
+

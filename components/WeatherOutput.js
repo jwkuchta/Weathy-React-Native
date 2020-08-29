@@ -6,7 +6,7 @@ import ToggleSwitch from 'toggle-switch-react-native'
 import colors from '../constants/colors'
 
 const WeatherOutput = ({ weatherData }) => {
-
+    
     const { temp, temp_min, temp_max, feels_like, pressure, humidity } = weatherData.main
     let iconUrl = `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`
 

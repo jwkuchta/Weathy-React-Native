@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { CurrentLocationButton } from './Buttons'
 import Fetching from './Fetching'
 import { OPEN_WEATHER_API_KEY as apiKey } from '../_apiKeys'
@@ -23,17 +23,17 @@ const Home = (props) => {
 
     const onCustomLocationHandler = () => {
         setCustom(true)
-        props.navigation.replace('EnterLocation')
+        props.navigation.push('EnterLocation')
         setFetching(false)  
     }
 
     const getCurrentLocationData = () => {
         if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-            let lat = position.coords.latitude
-            let lon =  position.coords.longitude
-            getWeatherData(lat, lon)
-        })
+            navigator.geolocation.getCurrentPosition(position => {
+                let lat = position.coords.latitude
+                let lon =  position.coords.longitude
+                getWeatherData(lat, lon)
+            })
         }   
     }
 
@@ -54,26 +54,32 @@ const Home = (props) => {
         })
     }
 
+
     return (
         <View style={styles.container}>
         {!weatherData && fetching && <Fetching />}
-        {!weatherData && !fetching && 
-        <View>
-            {custom ? 
-            <EnterLocationForm navigation={props.navigation} hello={'hello there'}/> 
-            : 
-            <CustomLocationButton onPress={onCustomLocationHandler} />} 
-            {!custom ? 
-            <CurrentLocationButton onPress={onPressHandler} /> 
-            : 
-            null}  
-        </View>}
+        {!weatherData && !fetching && custom && 
+        <EnterLocationForm 
+        getWeatherData={getWeatherData}
+        weatherData={weatherData}
+        setCustom={setCustom} 
+        fetching={fetching}
+        custom={custom} 
+        navigation={props.navigation}
+        />
+        }
+        {!weatherData && !fetching && !custom && 
+            <View>
+                <CustomLocationButton onPress={onCustomLocationHandler} />
+                <CurrentLocationButton onPress={onPressHandler} />
+            </View>}
         {weatherData && <WeatherContainer 
         weatherData={weatherData} 
         clearWeather={setWeatherData} 
         fetching={fetching}
         navigation={props.navigation}
-        />}
+        />
+        }
         </View>
     )
 }

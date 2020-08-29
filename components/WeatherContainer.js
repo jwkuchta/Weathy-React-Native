@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
+import React from 'react'
+import { View, StyleSheet } from 'react-native'
 import WeatherOutput from './WeatherOutput'
-import colors from '../constants/colors'
 import { CustomButton } from './Buttons'
 import Fetching from './Fetching'
 
 const WeatherContainer = (props) => {
+
+    console.log('WEATHER CONTAINER -- PROPS --', props.clearWeather, props.fetching)
 
     const handleBackHandler = () => {
         props.navigation.replace('Home')
