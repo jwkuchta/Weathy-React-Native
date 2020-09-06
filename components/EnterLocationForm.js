@@ -5,7 +5,7 @@ import { AntDesign } from '@expo/vector-icons'
 
 const EnterLocationForm = props => {
 
-    console.log('ENTER LOCATION -- PROPS --', props)
+    // console.log('ENTER LOCATION -- PROPS --', props)
 
     const [ city, setCity ] = useState(null)
     const [ country, setCountry ] = useState(null)

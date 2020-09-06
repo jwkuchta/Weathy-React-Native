@@ -6,13 +6,18 @@ import Fetching from './Fetching'
 
 const WeatherContainer = (props) => {
 
-    console.log('WEATHER CONTAINER -- PROPS --', props.clearWeather, props.fetching)
+    const weatherData = props.navigation.getParam('weatherData')
+    const fetching = props.navigation.getParam('fetching')
+
+    console.log('weather data and fetching from getParam: ', weatherData, fetching)
+
+    // console.log('WEATHER CONTAINER -- PROPS --', props.weatherData, props.fetching)
 
     const handleBackHandler = () => {
-        props.navigation.replace('Home')
+        props.navigation.goBack()
     }
 
-    if (props.fetching && props.weatherData === null) {
+    if (fetching && weatherData === null) {
         return (
             <View>
                 <Fetching />
@@ -21,7 +26,7 @@ const WeatherContainer = (props) => {
     }
     return (
         <View style={styles.container}>
-            <WeatherOutput weatherData={props.weatherData}/>
+            <WeatherOutput weatherData={weatherData}/>
             <CustomButton onPress={handleBackHandler}>BACK</CustomButton>
         </View>
     )
