@@ -4,7 +4,6 @@ import WeatherContainer from '../components/WeatherContainer'
 import Home from '../components/Home'
 import EnterLocationForm from '../components/EnterLocationForm'
 
-// configure the initial order of screens (the main screens)
 const WeatherNavigator = createStackNavigator({
     Home: Home,
     WeatherContainer: WeatherContainer,
