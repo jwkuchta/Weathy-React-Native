@@ -50,3 +50,12 @@ export const CustomLocationButton = props => {
     )
 }
 
+export const GetWeatherButton = props => {
+    return (
+        <CustomButton
+            onPress={props.onPress}>
+            Get Weather
+        </CustomButton>
+    )
+}
+

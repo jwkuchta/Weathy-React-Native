@@ -2,26 +2,18 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import WeatherOutput from './WeatherOutput'
 import { CustomButton } from './Buttons'
-import Fetching from './Fetching'
 
 const WeatherContainer = (props) => {
 
-    console.log('WEATHER CONTAINER -- PROPS --', props.clearWeather, props.fetching)
+    const weatherData = props.navigation.getParam('weatherData')
 
     const handleBackHandler = () => {
-        props.navigation.replace('Home')
+        props.navigation.goBack()
     }
 
-    if (props.fetching && props.weatherData === null) {
-        return (
-            <View>
-                <Fetching />
-            </View>
-        )
-    }
     return (
         <View style={styles.container}>
-            <WeatherOutput weatherData={props.weatherData}/>
+            <WeatherOutput weatherData={weatherData}/>
             <CustomButton onPress={handleBackHandler}>BACK</CustomButton>
         </View>
     )
