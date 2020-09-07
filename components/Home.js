@@ -10,7 +10,7 @@ const Home = (props) => {
 
     const currentLocationButtonHandler =() => {
         setFetching(true)
-        setTimeout(() => getCurrentLocationData(), 1500)     
+        getCurrentLocationData() 
     }
 
     const enterLocationFormHandler = () => {
@@ -19,11 +19,10 @@ const Home = (props) => {
     }
 
     const navigateAway = (lat, lon) => {
-        // console.log('coords in navigateaway', lat, lon) OK
+        setFetching(false)
         props.navigation.navigate('CurrentLocation', {
             latData: lat, 
-            lonData: lon, 
-            fetching: false
+            lonData: lon
         })
     }
 
@@ -37,14 +36,18 @@ const Home = (props) => {
         }   
     }
 
+    if (fetching) {
+        console.log('fetching in Home', fetching)
+        return <Fetching />
+    }
+
     return (
         <View style={styles.container}>
             <View>
-                {fetching && <Fetching />}
                 {!fetching && (
                     <View>
                         <CustomLocationButton onPress={enterLocationFormHandler} />
-                    <CurrentLocationButton onPress={currentLocationButtonHandler} />
+                        <CurrentLocationButton onPress={currentLocationButtonHandler} />
                     </View>
                 )}
             </View>

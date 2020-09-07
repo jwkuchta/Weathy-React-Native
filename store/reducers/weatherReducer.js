@@ -1,4 +1,4 @@
-import { SET_WEATHER_DATA, CLEAR_WEATHER_DATA } from '../actions/weatherActions'
+import { SET_WEATHER_DATA, CLEAR_WEATHER_DATA, SET_FETCHING } from '../actions/weatherActions'
 
 const initialState = {
     weatherData: {},
@@ -14,6 +14,11 @@ export default weatherReducer = (state = initialState, action) => {
             }
         case CLEAR_WEATHER_DATA:
             return initialState
+        case SET_FETCHING:
+            return {
+                ...state,
+                fetching: action.payload
+            }
         default: 
             return state
     }

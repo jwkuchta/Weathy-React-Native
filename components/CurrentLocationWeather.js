@@ -10,15 +10,12 @@ const CurrentLocationWeather = (props) => {
 
     const latitude = props.navigation.getParam('latData')
     const longitude = props.navigation.getParam('lonData')
-    // console.log('CURRENT LOCATION WEATHER COMPONENT latitude and longitude', latitude, longitude) OK
-
     const [ fetching, setFetching ] = useState(false)
 
     const getWeatherButtonHandler = () => {
         setFetching(true)
         getWeatherData(latitude, longitude)
         setFetching(false)
-        
     }
 
     const getWeatherData = async (lat, lon) => {
@@ -27,15 +24,18 @@ const CurrentLocationWeather = (props) => {
         const data = await response.json()
         props.navigation.navigate('WeatherContainer', {
             weatherData: data, 
-            fetching: fetching,
             withForm: false
         })
+    }
+
+    if (fetching) {
+        console.log('fetching in CurrentLocationWeather', fetching)
+        return <Fetching />
     }
 
     return (
         <View style={styles.container}>
             <View>
-                {fetching && <Fetching />}
                 <GetWeatherButton onPress={getWeatherButtonHandler} />
             </View>
         </View>

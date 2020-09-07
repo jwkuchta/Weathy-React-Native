@@ -3,6 +3,7 @@ import { View, StyleSheet, TextInput } from 'react-native'
 import { CustomButton } from './Buttons'
 import { AntDesign } from '@expo/vector-icons'
 import { OPEN_WEATHER_API_KEY as apiKey } from '../_apiKeys'
+import Fetching from '../components/Fetching'
 
 const baseUrl = 'https://api.openweathermap.org/data/2.5/weather?'
 
@@ -12,11 +13,8 @@ const EnterLocationForm = props => {
     const [ country, setCountry ] = useState(null)
     const [ fetching, setFetching ] = useState(false)
 
-    // const goBackHome = () => {
-    //     props.navigation.navigate('Home')
-    // }
-
     const handleSubmitForm = () => {
+        setFetching(true)
         getWeatherData(city, country)  
     }
 
@@ -24,14 +22,15 @@ const EnterLocationForm = props => {
         let apiUrl = `${baseUrl}q=${city},${country}&appid=${apiKey}&units=imperial`
         const response = await fetch(apiUrl)
         const data = await response.json()
+        setFetching(false)
         props.navigation.navigate('WeatherContainer', {
             weatherData: data,
-            fetching: fetching,
             withForm: true
         })
     }
 
-    if (props.fetching) {
+    if (fetching) {
+        console.log('fetching in EnterLocationForm', fetching)
         return (
             <View>
                 <Fetching />
