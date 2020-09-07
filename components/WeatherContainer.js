@@ -3,15 +3,17 @@ import { View, StyleSheet } from 'react-native'
 import WeatherOutput from './WeatherOutput'
 import { CustomButton } from './Buttons'
 import Fetching from './Fetching'
+import { OPEN_WEATHER_API_KEY as apiKey } from '../_apiKeys'
+
+const baseUrl = 'https://api.openweathermap.org/data/2.5/weather?'
 
 const WeatherContainer = (props) => {
 
     const weatherData = props.navigation.getParam('weatherData')
     const fetching = props.navigation.getParam('fetching')
+    // const withForm = props.navigation.getParam('withForm')
 
-    console.log('weather data and fetching from getParam: ', weatherData, fetching)
-
-    // console.log('WEATHER CONTAINER -- PROPS --', props.weatherData, props.fetching)
+    console.log('WEATHER CONTAINER -- PROPS --', weatherData, fetching)
 
     const handleBackHandler = () => {
         props.navigation.goBack()

@@ -32,6 +32,7 @@
 //             navigator.geolocation.getCurrentPosition(position => {
 //                 let lat = position.coords.latitude
 //                 let lon =  position.coords.longitude
+//                 console.log('home line 35 + lat + lon', lat, lon)
 //                 getWeatherData(lat, lon)
 //             })
 //         }
@@ -105,51 +106,40 @@ import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { CurrentLocationButton } from './Buttons'
 import Fetching from './Fetching'
-import { OPEN_WEATHER_API_KEY as apiKey } from '../_apiKeys'
-import WeatherContainer from './WeatherContainer'
 import { CustomLocationButton } from './Buttons'
-import EnterLocationForm from './EnterLocationForm'
-import { setWeatherData, clearWeatherData } from '../store/actions/weatherActions'
-import { useSelector, useDispatch } from 'react-redux'
-
-const baseUrl = 'https://api.openweathermap.org/data/2.5/weather?'
 
 const Home = (props) => {
 
-    // const dispatch = useDispatch()
-
     const [ fetching, setFetching ] = useState(false)
-    const [ weatherData, setWeatherData ] = useState(null)
+    // const [ weatherData, setWeatherData ] = useState(null)
+    const [ withForm, setwithForm ] = useState(false)
+    const [ latitude, setLatitude ] = useState(null)
+    const [ longitude, setLongitude ] = useState(null)
+    const [ coords, setCoords ] = useState(null)
 
-    const getCurrentLocationWeatherHandler = () => {
+    const currentLocationButtonHandler =() => {
         setFetching(true)
         setTimeout(() => getCurrentLocationData(), 1500) 
-        // console.log('weather data: ', weatherData) 
+        
+    }
+
+    const navigateAway = (lat, lon) => {
+        // console.log('coords in navigateaway', lat, lon) OK
+        props.navigation.navigate('CurrentLocation', {
+            latData: lat, 
+            lonData: lon, 
+            fetching: false
+        })
     }
 
     const getCurrentLocationData = () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
-                let lat = position.coords.latitude
-                let lon =  position.coords.longitude
-                getWeatherData(lat, lon)
+                let latitude = position.coords.latitude
+                let longitude =  position.coords.longitude
+                navigateAway(latitude, longitude)
             })
-        }  
-    }
-
-    const getWeatherData = async (param1, param2) => {
-        let apiUrl = `${baseUrl}lat=${param1}&lon=${param2}&units=imperial&appid=${apiKey}`
-        // if (custom) {
-        //     apiUrl = `${baseUrl}q=${param1},${param2}&appid=${apiKey}&units=imperial`
-        // }
-        // let apiUrl = `${baseUrl}lat=${param1}&lon=${param2}&units=imperial&appid=${apiKey}`
-        const response = await fetch(apiUrl)
-        const data = await response.json()
-        setFetching(false)
-        props.navigation.navigate('WeatherContainer', {
-            weatherData: data,
-            fetching: fetching
-        })
+        }   
     }
 
     const enterLocationFormHandler = () => {
@@ -159,12 +149,11 @@ const Home = (props) => {
 
     return (
         <View style={styles.container}>
-        {!weatherData && fetching && <Fetching />}
-        {!weatherData && !fetching && 
             <View>
+                {fetching && <Fetching />}
                 <CustomLocationButton onPress={enterLocationFormHandler} />
-                <CurrentLocationButton onPress={getCurrentLocationWeatherHandler} />
-            </View>}
+                <CurrentLocationButton onPress={currentLocationButtonHandler} />
+            </View>
         </View>
     )
 }

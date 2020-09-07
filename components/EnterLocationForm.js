@@ -5,20 +5,21 @@ import { AntDesign } from '@expo/vector-icons'
 
 const EnterLocationForm = props => {
 
-    // console.log('ENTER LOCATION -- PROPS --', props)
-
     const [ city, setCity ] = useState(null)
     const [ country, setCountry ] = useState(null)
-    const [ weatherData, setWeatherData ] = useState(null)
+    // const [ weatherData, setWeatherData ] = useState(null)
 
     const goBackHome = () => {
-        props.navigation.replace('Home')
+        props.navigation.navigate('Home')
         // props.setCustom(false)
     }
 
     const handleSubmitForm = () => {
+        // console.log(city, country)
         // console.log(props)
-        props.getWeatherData(city, country)
+        props.navigation.navigate('Home', {
+            city, country
+        })
     }
 
     if (props.fetching) {
@@ -41,7 +42,7 @@ const EnterLocationForm = props => {
                 minLength={3}
                 value={city}
                 placeholder='City...'
-                // onChangeText={props.setCity(city)}
+                onChangeText={setCity(city)}
                 />
                 <TextInput 
                 style={styles.input} 
@@ -52,7 +53,7 @@ const EnterLocationForm = props => {
                 minLength={3}
                 value={country}
                 placeholder='Country...'
-                // onChangeText={props.setCountry(country)}
+                onChangeText={setCountry(country)}
                 />
             </View>
             <View style={styles.buttons}>
