@@ -2,23 +2,32 @@ import React, { useState } from 'react'
 import { View, StyleSheet, TextInput } from 'react-native'
 import { CustomButton } from './Buttons'
 import { AntDesign } from '@expo/vector-icons'
+import { OPEN_WEATHER_API_KEY as apiKey } from '../_apiKeys'
+
+const baseUrl = 'https://api.openweathermap.org/data/2.5/weather?'
 
 const EnterLocationForm = props => {
 
     const [ city, setCity ] = useState(null)
     const [ country, setCountry ] = useState(null)
-    // const [ weatherData, setWeatherData ] = useState(null)
+    const [ fetching, setFetching ] = useState(false)
 
-    const goBackHome = () => {
-        props.navigation.navigate('Home')
-        // props.setCustom(false)
-    }
+    // const goBackHome = () => {
+    //     props.navigation.navigate('Home')
+    // }
 
     const handleSubmitForm = () => {
-        // console.log(city, country)
-        // console.log(props)
-        props.navigation.navigate('Home', {
-            city, country
+        getWeatherData(city, country)  
+    }
+
+    const getWeatherData = async (city, country) => {
+        let apiUrl = `${baseUrl}q=${city},${country}&appid=${apiKey}&units=imperial`
+        const response = await fetch(apiUrl)
+        const data = await response.json()
+        props.navigation.navigate('WeatherContainer', {
+            weatherData: data,
+            fetching: fetching,
+            withForm: true
         })
     }
 
@@ -42,7 +51,7 @@ const EnterLocationForm = props => {
                 minLength={3}
                 value={city}
                 placeholder='City...'
-                onChangeText={setCity(city)}
+                onChangeText={(city) => setCity(city)}
                 />
                 <TextInput 
                 style={styles.input} 
@@ -53,12 +62,12 @@ const EnterLocationForm = props => {
                 minLength={3}
                 value={country}
                 placeholder='Country...'
-                onChangeText={setCountry(country)}
+                onChangeText={(country) => setCountry(country)}
                 />
             </View>
             <View style={styles.buttons}>
                 <CustomButton onPress={handleSubmitForm}><AntDesign name="search1" size={24} color="white" /></CustomButton>
-                <CustomButton onPress={goBackHome}><AntDesign name="back" size={24} color="white" /></CustomButton>
+                {/* <CustomButton onPress={goBackHome}><AntDesign name="back" size={24} color="white" /></CustomButton> */}
             </View>
         </View>
     )

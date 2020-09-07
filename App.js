@@ -15,9 +15,9 @@ const store = createStore(rootReducer, applyMiddleware(thunk)) // remove applyMi
 export default function App() {
 
   return (
-    <Provider store={store}>
+    // <Provider store={store}>
       <WeatherNavigator />
-    </Provider>
+    // </Provider>
   )
 
 }
